@@ -18,6 +18,6 @@ infoFrom = getInfo("https://www.datos.gov.co/Salud-y-Protecci-n-Social/Casos-pos
 if infoFrom == None:
     print("Title could not be found")  
 else:
-        print(infoFrom)
+    print(infoFrom)
 
 
