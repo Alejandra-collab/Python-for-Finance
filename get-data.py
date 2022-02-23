@@ -10,14 +10,9 @@ start = dt.datetime(2020, 1, 1)
 end = dt.datetime(2020, 9, 7)
 
 tickers = ['GOOG', 'AMZN', 'AAPL']
-cc = 'BTC-USD' # We can replace 'tickers' in the following
-               # lines of code for 'cc' andthe data that 
-               # the code will download will be the cc 
-               # (cryptocurrency) data
+cc = 'BTC-USD' # We can replace 'tickers' in the following lines of code for 'cc' andthe data that the code will download will be the cc (cryptocurrency) data
 
 for ticker in tickers:
     data = web.DataReader(ticker, 'yahoo', start, end)
-    data.to_csv('{}.csv'.format(ticker)) # the {} will be replaced 
-                                     # with whatever the ticker
-                                     #  is
-                                     #
+    data.to_csv('{}.csv'.format(ticker)) # the {} will be replaced with whatever the ticker is
+                                     
