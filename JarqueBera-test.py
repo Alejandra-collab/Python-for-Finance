@@ -72,7 +72,7 @@ plt.show()
 # Cuando el conjunto de datos falle el test de normalidad el programa se va a detener:
 is_normal = True
 counter = 0
-while is_normal:
+while is_normal and counter < 1000:
 
     x_size = 10**6
     degrees_freedom = 5000
