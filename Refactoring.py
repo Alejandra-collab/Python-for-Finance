@@ -70,6 +70,3 @@ plt.hist(x, bins = 100)
 plt.title('Histogram ' + x_str)
 plt.xlabel(str1 + '\n' + str2)
 plt.show()
-
-# Finanzas con Python 06 refactoring 1: funciones 
-# 10:54
