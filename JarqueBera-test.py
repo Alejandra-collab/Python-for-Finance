@@ -1,10 +1,9 @@
-# En este script:
-# 1. Distribuciones en Python
-# 1.1.  Calculo de funciones estadísticas, momentos, percentiles y Valor en Riesgo (VaR)
-# 1.2. Tests de normalidad o Gaussianidad: Jarque-Bera 
-# 1.3. Visualización de datos en Python: histogramas
-# 1.4. Teorema de Borel-Cantelli, VaR y CVaR
-
+# In this script:
+# 1. Distributions in Python
+# 1.1. Calculation of statistical functions, moments, percentiles, and Value at Risk (VaR)
+# 1.2. Normality or Gaussianity tests: Jarque-Bera
+# 1.3. Data visualization in Python: histograms
+# 1.4. Borel-Cantelli theorem, VaR, and CVaR
 
 
 import numpy as np
@@ -18,16 +17,16 @@ from scipy.optimize import minimize
 from numpy import linalg as LA
 
 
-# ----------------------------- 1.DISTRIBUCIONES -------------------------
+# ----------------------------- 1.DISTRIBUTIONS -------------------------
 
-# Queremos hacer un test de Python que me calcule un test de normalidad de rendimientos. Primero hacerlo con rendimientos simulados.
-# Hay varios test de normalidad, uno de ellos se llama de Jerque-bera.
+# We want to perform a Python test that calculates a normality test for returns. Let's start by doing it with simulated returns.
+# There are several normality tests, one of them is called Jarque-Bera.
 
-# 1.4. Teorema de Borel-Cantelli, VaR y CVaR -----------------------------
+# 1.4. 1.4. Borel-Cantelli theorem, VaR, and CVaR -----------------------------
 
-# Usar un nivel de confianza del 95%, por ejemplo, significa que aún a un nivel de confianza alto y corriendo el programa infinidad de veces, habrá alguna distribución normal cuyo test de Jarque Bera la haga ver como no normal. Esto es el llamado teorema de Borel-Cantelli. Veamos:
+# Using a confidence level of 95%, for example, means that even at a high confidence level and running the program infinitely, there will be some normal distribution for which the Jarque-Bera test makes it appear as non-normal. This is known as the Borel-Cantelli theorem.
 
-# Cuando el conjunto de datos falle el test de normalidad el programa se va a detener:
+# When the dataset fails the normality test, the program will stop:
 is_normal = True
 counter = 0
 while is_normal and counter < 10:
@@ -52,29 +51,29 @@ while is_normal and counter < 10:
 
     # Compute risk metrics -----------------------------------------------
     x_mean = np.mean(x)
-    x_stdev = np.std(x) # volatilidad
-    x_skew = skew(x) # simetría
-    x_kurt = kurtosis(x) # Esta es kurtosis en exceso. Cuántas 'colas largas' tiene
-    x_var_95 = np.percentile(x, 5) #var: valor en riesgo
-    x_cvar_95 = np.mean(x[x <= x_var_95]) # Media de las peores pérdidas
-    x_sharpe = x_mean/x_stdev # Sharpe ratio
+    x_std = np.std(x) # volatility
+    x_skew = skew(x) # skewness
+    x_kurt = kurtosis(x) # This is excess kurtosis. How many 'long tails' it has
+    x_var_95 = np.percentile(x, 5) # VaR: Value at Risk
+    x_cvar_95 = np.mean(x[x <= x_var_95]) # Mean of the worst losses
+    x_sharpe = x_mean/x_std # Sharpe ratio
     jb = x_size/6 * (x_skew**2 + 1/4*x_kurt**2)
     p_value = 1 - chi2.cdf(jb, df = 2)
     is_normal = (p_value > 0.05) # equivalently jb < 6
 
-    # Visualizar el cálculo de las funciones -----------------------------
+    # Visualize the calculation of the functions -----------------------------
     print(x_str)
     print('mean: ' + str(x_mean))
-    print('std: ' + str(x_stdev))
-    print('skewness: ' + str(x_skew)) #Si es >media, los datos están cargados a la derecha de la distribución. <media significa que la distribución está cargada a la izquierda de la distribución
-    print('kurtosis: ' + str(x_kurt)) #Si la kurtosis <0, la variable aleatoria con la que estoy jugando decrece más rápido que la normal. Si k_3 (kurtosis en exceso) > 0 decrece menos rápido que la normal. k_3 = 0 significa que es una normal
+    print('std: ' + str(x_std))
+    print('skewness: ' + str(x_skew)) # If it is > mean, the data is skewed to the right of the distribution. < mean means that the distribution is skewed to the left of the distribution
+    print('kurtosis: ' + str(x_kurt)) # If kurtosis < 0, the random variable I am dealing with decreases faster than the normal distribution. If k_3 (excess kurtosis) > 0, it decreases less quickly than the normal distribution. k_3 = 0 means it is a normal distribution
     print('VaR 95%: ' + str(x_var_95)) 
     print('CVaR 95%: ' + str(x_cvar_95))
     print('Jarque-Bera: ' + str(jb))
     print('p-value: ' + str(p_value))
     print('is normal ' + str(is_normal))
 
-    # El contador se detendrá cuando un conjunto de datos no pase el test de normalidad
+    # The counter will stop when a dataset fails the normality test
     print('counter ' + str(counter))
     counter +=1
     print('-----------------')
